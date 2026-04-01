@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Илья Бахтин · 3D Visualization</title>
+    
+    <!-- Шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
+    
+    <!-- Lightbox2 для лайтбокса -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    
+    <!-- Pannellum для 360 панорамы -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+        
+        /* Typography */
+        h1 {
+            font-size: 56px;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 16px;
+        }
+        
+        h2 {
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            margin-bottom: 48px;
+        }
+        
+        .subhead {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 24px;
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 100px 0 80px;
+        }
+        
+        .hero-role {
+            font-size: 18px;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 24px;
+            letter-spacing: 0.02em;
+        }
+        
+        .hero-description {
+            font-size: 20px;
+            color: #444;
+            max-width: 560px;
+            margin: 24px 0 32px;
+        }
+        
+        .stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 32px 0 24px;
+        }
+        
+        .stack-item {
+            background: #f0f0f0;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .location {
+            font-size: 14px;
+            color: #888;
+            margin-top: 16px;
+        }
+        
+        /* Grid для рендеров и видео */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+        }
+        
+        .work-item {
+            cursor: pointer;
+        }
+        
+        .work-item img, 
+        .work-item video {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 16px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .work-item img:hover {
+            transform: scale(1.01);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .work-caption {
+            margin-top: 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+            letter-spacing: 0.01em;
+        }
+        
+        .work-caption-year {
+            color: #888;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+        
+        /* Видео блок */
+        video {
+            display: block;
+            background: #f5f5f5;
+            border-radius: 16px;
+        }
+        
+        /* 360 панорама */
+        .panorama-container {
+            width: 100%;
+            height: 70vh;
+            min-height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+        
+        .panorama-caption {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+        
+        /* Контакты */
+        .contact-links {
+            display: flex;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+        
+        .contact-item:hover {
+            opacity: 0.6;
+        }
+        
+        .contact-icon {
+            font-size: 24px;
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 40px 0 60px;
+            text-align: center;
+            color: #aaa;
+            font-size: 13px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 24px;
+            }
+            
+            h1 {
+                font-size: 40px;
+            }
+            
+            h2 {
+                font-size: 24px;
+                margin-bottom: 32px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            .hero {
+                padding: 60px 0 40px;
+            }
+            
+            .hero-description {
+                font-size: 18px;
+            }
+            
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .panorama-container {
+                height: 50vh;
+                min-height: 400px;
+            }
+            
+            .contact-links {
+                gap: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stack-item {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            
+            .work-caption {
+                font-size: 12px;
+            }
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="container">
+        
+        <!-- HERO / Обо мне -->
+        <div class="hero">
+            <div class="hero-role">3D VISUALIZATION</div>
+            <h1>Илья Бахтин</h1>
+            <div class="hero-description">
+                Помогаю увидеть объекты до их реализации.<br>
+                Архитектурная и предметная визуализация, статика, видео, интерактивные панорамы.
+            </div>
+            <div class="stack">
+                <span class="stack-item">Blender</span>
+                <span class="stack-item">Substance 3D Painter</span>
+                <span class="stack-item">Unreal Engine 5</span>
+            </div>
+            <div class="location">Нижний Новгород · Работаю удаленно</div>
+        </div>
+        
+        <!-- СТАТИЧЕСКИЕ РЕНДЕРЫ -->
+        <section>
+            <h2>Статические рендеры</h2>
+            <div class="grid-2">
+                <!-- Интерьер -->
+                <div class="work-item">
+                    <a href="images/interior-full.jpg" data-lightbox="renders" data-title="Интерьер в лофт-стиле · Blender · UE5 · 2026">
+                        <img src="images/interior-preview.jpg" alt="Интерьер">
+                    </a>
+                    <div class="work-caption">
+                        Интерьер в лофт-стиле
+                        <span class="work-caption-year">2026</span>
+                    </div>
+                </div>
+                <!-- Экстерьер -->
+                <div class="work-item">
+                    <a href="images/exterior-full.jpg" data-lightbox="renders" data-title="Вилла Blackbird · Blender · UE5 · 2026">
+                        <img src="images/exterior-preview.jpg" alt="Экстерьер">
+                    </a>
+                    <div class="work-caption">
+                        Вилла Blackbird
+                        <span class="work-caption-year">2026</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ВИДЕО / ПРОЛЕТКИ -->
+        <section>
+            <h2>Видео</h2>
+            <div class="grid-2">
+                <!-- Интерьер видео -->
+                <div class="work-item">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/interior-loop.mp4" type="video/mp4">
+                    </video>
+                    <div class="work-caption">
+                        Интерьер · пролетка
+                        <span class="work-caption-year">10 сек · зациклено</span>
+                    </div>
+                </div>
+                <!-- Экстерьер видео -->
+                <div class="work-item">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/exterior-loop.mp4" type="video/mp4">
+                    </video>
+                    <div class="work-caption">
+                        Экстерьер · облет
+                        <span class="work-caption-year">10 сек · зациклено</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 360 ПАНОРАМА -->
+        <section>
+            <h2>360° Панорама</h2>
+            <div class="panorama-container" id="panorama"></div>
+            <div class="panorama-caption">
+                Интерьер · вращайте мышкой или пальцем для полного обзора
+            </div>
+        </section>
+        
+        <!-- КОНТАКТЫ -->
+        <section>
+            <h2>Контакты</h2>
+            <div class="contact-links">
+                <a href="https://t.me/Merlo1337" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="contact-icon">📱</span>
+                    <span>@Merlo1337</span>
+                </a>
+                <a href="mailto:battleroy7@gmail.com" class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <span>battleroy7@gmail.com</span>
+                </a>
+            </div>
+        </section>
+        
+    </main>
+    
+    <footer class="footer">
+        <div class="container">
+            Илья Бахтин · 3D Visualization · 2026
+        </div>
+    </footer>
+    
+    <!-- Скрипты -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    
+    <script>
+        // Настройка Lightbox
+        lightbox.option({
+            'resizeDuration': 200,
+            'wrapAround': true,
+            'albumLabel': 'Работа %1 из %2'
+        });
+        
+        // Инициализация 360 панорамы
+        pannellum.viewer('panorama', {
+            "type": "equirectangular",
+            "panorama": "panorama/interior-360.jpg",
+            "autoLoad": true,
+            "autoRotate": -2,
+            "autoRotateInactivityDelay": 3000,
+            "showZoomCtrl": true,
+            "showFullscreenCtrl": true,
+            "hotSpotDebug": false,
+            "compass": false,
+            "hfov": 110,
+            "minHfov": 50,
+            "maxHfov": 120
+        });
+    </script>
+    
+</body>
+</html>
