@@ -8,11 +8,13 @@
     <!-- Шрифты -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet">
     
-    <!-- Lightbox2 для лайтбокса -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/css/lightbox.min.css" rel="stylesheet">
+    <!-- Lightbox2 (стабильная версия) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
     
     <!-- Pannellum для 360 панорамы -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
     
     <style>
         * {
@@ -35,7 +37,6 @@
             padding: 0 32px;
         }
         
-        /* Typography */
         h1 {
             font-size: 56px;
             font-weight: 500;
@@ -51,23 +52,6 @@
             margin-bottom: 48px;
         }
         
-        .subhead {
-            font-size: 18px;
-            color: #666;
-            margin-bottom: 24px;
-        }
-        
-        /* Sections */
-        section {
-            padding: 80px 0;
-            border-bottom: 1px solid #eaeaea;
-        }
-        
-        section:last-child {
-            border-bottom: none;
-        }
-        
-        /* Hero */
         .hero {
             padding: 100px 0 80px;
         }
@@ -109,11 +93,18 @@
             margin-top: 16px;
         }
         
-        /* Grid для рендеров и видео */
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 32px;
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid #eaeaea;
+        }
+        
+        section:last-child {
+            border-bottom: none;
+        }
+        
+        .work-single {
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .work-item {
@@ -140,6 +131,7 @@
             font-weight: 500;
             color: #333;
             letter-spacing: 0.01em;
+            text-align: center;
         }
         
         .work-caption-year {
@@ -148,14 +140,12 @@
             margin-left: 8px;
         }
         
-        /* Видео блок */
         video {
             display: block;
             background: #f5f5f5;
             border-radius: 16px;
         }
         
-        /* 360 панорама */
         .panorama-container {
             width: 100%;
             height: 70vh;
@@ -172,7 +162,6 @@
             color: #888;
         }
         
-        /* Контакты */
         .contact-links {
             display: flex;
             gap: 48px;
@@ -199,7 +188,6 @@
             font-size: 24px;
         }
         
-        /* Footer */
         .footer {
             padding: 40px 0 60px;
             text-align: center;
@@ -207,7 +195,6 @@
             font-size: 13px;
         }
         
-        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 0 24px;
@@ -234,11 +221,6 @@
                 font-size: 18px;
             }
             
-            .grid-2 {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
             .panorama-container {
                 height: 50vh;
                 min-height: 400px;
@@ -249,18 +231,6 @@
             }
         }
         
-        @media (max-width: 480px) {
-            .stack-item {
-                font-size: 12px;
-                padding: 4px 12px;
-            }
-            
-            .work-caption {
-                font-size: 12px;
-            }
-        }
-        
-        /* Smooth scroll */
         html {
             scroll-behavior: smooth;
         }
@@ -286,13 +256,12 @@
             <div class="location">Нижний Новгород · Работаю удаленно</div>
         </div>
         
-        <!-- СТАТИЧЕСКИЕ РЕНДЕРЫ -->
+        <!-- СТАТИЧЕСКИЙ РЕНДЕР (интерьер) -->
         <section>
-            <h2>Статические рендеры</h2>
-            <div class="grid-2">
-                <!-- Интерьер -->
+            <h2>Статический рендер</h2>
+            <div class="work-single">
                 <div class="work-item">
-                    <a href="images/interior-full.jpg" data-lightbox="renders" data-title="Интерьер в лофт-стиле · Blender · UE5 · 2026">
+                    <a href="images/interior-full.jpeg" data-lightbox="renders" data-title="Интерьер в лофт-стиле · Blender · UE5 · 2026">
                         <img src="images/interior-preview.jpg" alt="Интерьер">
                     </a>
                     <div class="work-caption">
@@ -300,40 +269,19 @@
                         <span class="work-caption-year">2026</span>
                     </div>
                 </div>
-                <!-- Экстерьер -->
-                <div class="work-item">
-                    <a href="images/exterior-full.jpg" data-lightbox="renders" data-title="Вилла Blackbird · Blender · UE5 · 2026">
-                        <img src="images/exterior-preview.jpg" alt="Экстерьер">
-                    </a>
-                    <div class="work-caption">
-                        Вилла Blackbird
-                        <span class="work-caption-year">2026</span>
-                    </div>
-                </div>
             </div>
         </section>
         
-        <!-- ВИДЕО / ПРОЛЕТКИ -->
+        <!-- ВИДЕО / ПРОЛЕТКА -->
         <section>
             <h2>Видео</h2>
-            <div class="grid-2">
-                <!-- Интерьер видео -->
+            <div class="work-single">
                 <div class="work-item">
                     <video autoplay muted loop playsinline>
                         <source src="videos/interior-loop.mp4" type="video/mp4">
                     </video>
                     <div class="work-caption">
                         Интерьер · пролетка
-                        <span class="work-caption-year">10 сек · зациклено</span>
-                    </div>
-                </div>
-                <!-- Экстерьер видео -->
-                <div class="work-item">
-                    <video autoplay muted loop playsinline>
-                        <source src="videos/exterior-loop.mp4" type="video/mp4">
-                    </video>
-                    <div class="work-caption">
-                        Экстерьер · облет
                         <span class="work-caption-year">10 сек · зациклено</span>
                     </div>
                 </div>
@@ -372,32 +320,37 @@
         </div>
     </footer>
     
-    <!-- Скрипты -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.4/js/lightbox.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
-    
     <script>
-        // Настройка Lightbox
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true,
-            'albumLabel': 'Работа %1 из %2'
-        });
-        
-        // Инициализация 360 панорамы
-        pannellum.viewer('panorama', {
-            "type": "equirectangular",
-            "panorama": "panorama/interior-360.jpg",
-            "autoLoad": true,
-            "autoRotate": -2,
-            "autoRotateInactivityDelay": 3000,
-            "showZoomCtrl": true,
-            "showFullscreenCtrl": true,
-            "hotSpotDebug": false,
-            "compass": false,
-            "hfov": 110,
-            "minHfov": 50,
-            "maxHfov": 120
+        // Ждем полной загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация Lightbox
+            if (typeof lightbox !== 'undefined') {
+                lightbox.option({
+                    'resizeDuration': 200,
+                    'wrapAround': true,
+                    'albumLabel': 'Работа %1 из %2'
+                });
+            }
+            
+            // Инициализация 360 панорамы
+            var panoramaElement = document.getElementById('panorama');
+            if (panoramaElement && typeof pannellum !== 'undefined') {
+                pannellum.viewer('panorama', {
+                    "type": "equirectangular",
+                    "panorama": "panorama/interior-360.jpg",
+                    "autoLoad": true,
+                    "autoRotate": -2,
+                    "autoRotateInactivityDelay": 3000,
+                    "showZoomCtrl": true,
+                    "showFullscreenCtrl": true,
+                    "compass": false,
+                    "hfov": 110,
+                    "minHfov": 50,
+                    "maxHfov": 120
+                });
+            } else {
+                console.log('Pannellum not loaded or panorama element not found');
+            }
         });
     </script>
     
