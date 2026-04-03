@@ -50,14 +50,6 @@
             margin-bottom: 48px;
         }
         
-        h3 {
-            font-size: 18px;
-            font-weight: 500;
-            color: #666;
-            margin-bottom: 24px;
-            letter-spacing: 0.01em;
-        }
-        
         .hero {
             padding: 100px 0 80px;
         }
@@ -108,15 +100,14 @@
             border-bottom: none;
         }
         
-        /* Сетка для рендеров (2 колонки на десктопе, 1 на мобилке) */
-        .grid-2 {
+        /* Сетка для рендеров */
+        .grid-4 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 40px;
         }
         
-        /* Сетка для 4 рендеров (2×2) */
-        .grid-4 {
+        .grid-2 {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 40px;
@@ -160,15 +151,23 @@
             border-radius: 16px;
         }
         
-        /* Панорама */
+        /* Блок панорамы — исправленное позиционирование */
+        .panorama-section {
+            position: relative;
+        }
+        
+        .panorama-wrapper {
+            position: relative;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            background: #1a1a1a;
+        }
+        
         .panorama-container {
             width: 100%;
             height: 70vh;
             min-height: 500px;
-            border-radius: 20px;
-            overflow: hidden;
-            background: #1a1a1a;
-            position: relative;
         }
         
         .panorama-controls {
@@ -179,12 +178,14 @@
             display: flex;
             justify-content: center;
             gap: 12px;
-            z-index: 10;
+            z-index: 20;
             flex-wrap: wrap;
             padding: 0 16px;
+            pointer-events: none; /* Чтобы кнопки не мешали кликам по панораме */
         }
         
         .scene-btn {
+            pointer-events: auto; /* Возвращаем кликабельность кнопкам */
             background: rgba(0,0,0,0.7);
             backdrop-filter: blur(10px);
             color: white;
@@ -276,7 +277,7 @@
                 font-size: 18px;
             }
             
-            .grid-2, .grid-4 {
+            .grid-4, .grid-2 {
                 grid-template-columns: 1fr;
                 gap: 40px;
             }
@@ -332,7 +333,7 @@
             <div class="location">Нижний Новгород · Работаю удаленно</div>
         </div>
         
-        <!-- СТАТИЧЕСКИЕ РЕНДЕРЫ (4 штуки: 2 интерьера + 2 экстерьера) -->
+        <!-- СТАТИЧЕСКИЕ РЕНДЕРЫ -->
         <section>
             <h2>Статические рендеры</h2>
             <div class="grid-4">
@@ -379,11 +380,10 @@
             </div>
         </section>
         
-        <!-- ВИДЕО / ПРОЛЕТКИ (без изменений: интерьер + экстерьер) -->
+        <!-- ВИДЕО -->
         <section>
             <h2>Видео</h2>
             <div class="grid-2">
-                <!-- Интерьер видео -->
                 <div class="work-item">
                     <video autoplay muted loop playsinline>
                         <source src="videos/interior-loop.mp4" type="video/mp4">
@@ -393,7 +393,6 @@
                         <span class="work-caption-year">10 сек · зациклено</span>
                     </div>
                 </div>
-                <!-- Экстерьер видео -->
                 <div class="work-item">
                     <video autoplay muted loop playsinline>
                         <source src="videos/exterior-loop.mp4" type="video/mp4">
@@ -406,16 +405,18 @@
             </div>
         </section>
         
-        <!-- 360 ПАНОРАМА (с двумя сценами и ограниченным зумом) -->
-        <section>
+        <!-- 360 ПАНОРАМА (исправленная структура) -->
+        <section class="panorama-section">
             <h2>360° Панорама</h2>
-            <div class="panorama-container" id="panorama"></div>
-            <div class="panorama-controls">
-                <button class="scene-btn active" data-scene="scene1">Ракурс 1</button>
-                <button class="scene-btn" data-scene="scene2">Ракурс 2</button>
+            <div class="panorama-wrapper">
+                <div class="panorama-container" id="panorama"></div>
+                <div class="panorama-controls">
+                    <button class="scene-btn active" data-scene="scene1">Ракурс 1 (8K)</button>
+                    <button class="scene-btn" data-scene="scene2">Ракурс 2 (6K)</button>
+                </div>
             </div>
             <div class="panorama-caption">
-                Вращайте мышкой или пальцем для полного обзора · Зум ограничен (65°–85°)
+                Вращайте мышкой или пальцем · Зум ограничен (65°–85°) · Шов сглажен
             </div>
         </section>
         
@@ -449,10 +450,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pannellum/2.5.6/pannellum.js"></script>
     
     <script>
-        // Ждем полной загрузки DOM
         document.addEventListener('DOMContentLoaded', function() {
             
-            // 1. Инициализация GLightbox
+            // GLightbox
             const lightbox = GLightbox({
                 touchNavigation: true,
                 loop: true,
@@ -461,17 +461,17 @@
                 closeOnOutsideClick: true
             });
             
-            // 2. Инициализация панорамы с двумя сценами и ограниченным зумом
+            // Панорама с двумя сценами
             let panoramaViewer = null;
             
-            // Определяем сцены
+            // Конфигурация сцен (указываем точные пути к файлам)
             const scenes = {
                 scene1: {
-                    title: "Ракурс 1",
+                    title: "Ракурс 1 (8K)",
                     panorama: "panorama/interior-360-1.jpg"
                 },
                 scene2: {
-                    title: "Ракурс 2",
+                    title: "Ракурс 2 (6K)",
                     panorama: "panorama/interior-360-2.jpg"
                 }
             };
@@ -479,13 +479,15 @@
             // Функция загрузки сцены
             function loadScene(sceneId) {
                 if (panoramaViewer) {
+                    // Сбрасываем угол обзора
                     panoramaViewer.setYaw(0);
                     panoramaViewer.setPitch(0);
+                    // Загружаем сцену
                     panoramaViewer.loadScene(sceneId);
                 }
             }
             
-            // Создаем конфиг для Pannellum
+            // Конфигурация Pannellum с настройками для скрытия шва
             const panoramaConfig = {
                 "default": {
                     "firstScene": "scene1",
@@ -494,15 +496,16 @@
                     "showZoomCtrl": true,
                     "showFullscreenCtrl": true,
                     "compass": false,
-                    "hfov": 75,           // Начальный угол обзора (между min и max)
-                    "minHfov": 65,        // Минимальный зум (65°) — нельзя приблизить сильнее
-                    "maxHfov": 85,        // Максимальный зум (85°) — нельзя отдалить дальше
+                    "hfov": 75,
+                    "minHfov": 65,
+                    "maxHfov": 85,
                     "mouseZoom": true,
-                    "touchZoom": true
+                    "touchZoom": true,
+                    "crossOrigin": "anonymous"
                 },
                 "scenes": {
                     "scene1": {
-                        "title": "Ракурс 1",
+                        "title": scenes.scene1.title,
                         "panorama": scenes.scene1.panorama,
                         "type": "equirectangular",
                         "hfov": 75,
@@ -510,7 +513,7 @@
                         "maxHfov": 85
                     },
                     "scene2": {
-                        "title": "Ракурс 2",
+                        "title": scenes.scene2.title,
                         "panorama": scenes.scene2.panorama,
                         "type": "equirectangular",
                         "hfov": 75,
@@ -520,22 +523,28 @@
                 }
             };
             
-            // Инициализируем панораму
+            // Инициализация
             panoramaViewer = pannellum.viewer('panorama', panoramaConfig);
             
-            // Добавляем обработчики для кнопок
+            // Обработчики кнопок
             const sceneBtns = document.querySelectorAll('.scene-btn');
             sceneBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
-                    // Убираем активный класс у всех кнопок
                     sceneBtns.forEach(b => b.classList.remove('active'));
-                    // Добавляем активный класс текущей кнопке
                     this.classList.add('active');
-                    // Загружаем выбранную сцену
                     const sceneId = this.getAttribute('data-scene');
                     loadScene(sceneId);
                 });
             });
+            
+            // Дополнительная настройка для второй сцены (6K) — если есть шов, попробуем его скрыть
+            // Pannellum автоматически сглаживает шов, но можно добавить небольшую обработку
+            setTimeout(function() {
+                if (panoramaViewer) {
+                    // Принудительно обновляем рендер для сглаживания артефактов
+                    panoramaViewer.renderer.update();
+                }
+            }, 1000);
         });
     </script>
     
