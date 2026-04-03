@@ -102,9 +102,11 @@
             border-bottom: none;
         }
         
-        .work-single {
-            max-width: 800px;
-            margin: 0 auto;
+        /* Grid для двух работ */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
         }
         
         .work-item {
@@ -131,7 +133,6 @@
             font-weight: 500;
             color: #333;
             letter-spacing: 0.01em;
-            text-align: center;
         }
         
         .work-caption-year {
@@ -195,6 +196,7 @@
             font-size: 13px;
         }
         
+        /* Responsive */
         @media (max-width: 768px) {
             .container {
                 padding: 0 24px;
@@ -221,6 +223,11 @@
                 font-size: 18px;
             }
             
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
             .panorama-container {
                 height: 50vh;
                 min-height: 400px;
@@ -228,6 +235,17 @@
             
             .contact-links {
                 gap: 32px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stack-item {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            
+            .work-caption {
+                font-size: 12px;
             }
         }
         
@@ -256,12 +274,13 @@
             <div class="location">Нижний Новгород · Работаю удаленно</div>
         </div>
         
-        <!-- СТАТИЧЕСКИЙ РЕНДЕР (интерьер) -->
+        <!-- СТАТИЧЕСКИЕ РЕНДЕРЫ -->
         <section>
-            <h2>Статический рендер</h2>
-            <div class="work-single">
+            <h2>Статические рендеры</h2>
+            <div class="grid-2">
+                <!-- Интерьер -->
                 <div class="work-item">
-                    <a href="images/interior-full.jpeg" data-lightbox="renders" data-title="Интерьер в лофт-стиле · Blender · UE5 · 2026">
+                    <a href="images/interior-full.jpg" data-lightbox="renders" data-title="Интерьер в лофт-стиле · Blender · UE5 · 2026">
                         <img src="images/interior-preview.jpg" alt="Интерьер">
                     </a>
                     <div class="work-caption">
@@ -269,19 +288,40 @@
                         <span class="work-caption-year">2026</span>
                     </div>
                 </div>
+                <!-- Экстерьер -->
+                <div class="work-item">
+                    <a href="images/exterior-full.jpg" data-lightbox="renders" data-title="Вилла Blackbird · Blender · UE5 · 2026">
+                        <img src="images/exterior-preview.jpg" alt="Экстерьер">
+                    </a>
+                    <div class="work-caption">
+                        Вилла Blackbird
+                        <span class="work-caption-year">2026</span>
+                    </div>
+                </div>
             </div>
         </section>
         
-        <!-- ВИДЕО / ПРОЛЕТКА -->
+        <!-- ВИДЕО / ПРОЛЕТКИ -->
         <section>
             <h2>Видео</h2>
-            <div class="work-single">
+            <div class="grid-2">
+                <!-- Интерьер видео -->
                 <div class="work-item">
                     <video autoplay muted loop playsinline>
                         <source src="videos/interior-loop.mp4" type="video/mp4">
                     </video>
                     <div class="work-caption">
                         Интерьер · пролетка
+                        <span class="work-caption-year">10 сек · зациклено</span>
+                    </div>
+                </div>
+                <!-- Экстерьер видео -->
+                <div class="work-item">
+                    <video autoplay muted loop playsinline>
+                        <source src="videos/exterior-loop.mp4" type="video/mp4">
+                    </video>
+                    <div class="work-caption">
+                        Экстерьер · облет
                         <span class="work-caption-year">10 сек · зациклено</span>
                     </div>
                 </div>
